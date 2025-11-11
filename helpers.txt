@@ -1,0 +1,122 @@
+np.mean(df['sleep']) #znalezienie sredniej w kolumnie 'sleep' (suma wartosci podzielona przez liczbe wartosci)
+np.median(df['sleep']) #znalezienie mediany w kolumnie 'sleep' (srodkowa wartosc)
+np.mode(df['sleep']) #znalezienie dominanty (moda) w kolumnie 'sleep' (najczesciej wystepujaca wartosc)
+df['sleep'].sem() #znalezienie bledu standardowego sredniej (SEM) w kolumnie 'sleep' (odchylenie standardowe podzielone przez pierwiastek z liczby wartosci)
+from scipy.stats import skewness, kurtosis #importowanie funkcji do obliczania skosnosci i kurtozy
+df.skew() #znalezienie skosnosci rozkladu danych w kolumnie 'sleep' (asymetria rozkladu)
+df.kurt() #znalezienie kurtozy rozkladu danych w kolumnie 'sleep' (spiczastosc rozkladu)
+statistics.mode(df['sleep']) #znalezienie dominanty (moda) w kolumnie 'sleep' (najczesciej wystepujaca wartosc)
+df['sleep'].sort_values().iloc[20] #znalezienie wartosci 20 percentyla w kolumnie 'sleep'
+np.var(df['sleep'], ddof = 1) # #znalezienie wariancji (odleglosci od sredniej) w kolumnie 'sleep'
+np.std(df['sleep'], ddof = 1) # #znalezienie odchylenia standardowego (pierwiastek z wariancji) w kolumnie 'sleep'
+np.quantile(df['sleep'], 0.75) - np.quantile(df['sleep'], 0.25) #faggznalezienie rozstepu miedzy kwartylowego (IQR) w kolumnie 'sleep'  
+np.linspace(start, stop, num=50) #tworzy tablice z num elementami rowno rozlozonymi miedzy start i stop                                                                
+iqr(df['sleep']) #znalezienie rozstepu miedzy kwartylowego (IQR) w kolumnie 'sleep'
+lower_treshold = np.quantile(df['sleep'], 0.25) - 1.5 * iqr(df['sleep']) #obliczenie dolnej granicy na podstawie IQR - oultiers
+upper_treshold = np.quantile(df['sleep'], 0.75) + 1.5 * iqr(df['sleep']) #obliczenie gorne granicy na podstawie IQR - oultiers
+outliers = df['sleep'][(df['sleep'] < lower_treshold) | (df['sleep'] > upper_treshold)] #znalezienie wartosci odstajacych w kolumnie 'sleep'
+df['sleep'].describe() #generowanie statystyk opisowych dla kolumny 'sleep'
+sales_count.sample() #losowy probka z danych sales_count
+sales_count.sample(5, replace = True) #losowa probka z danych sales_count o wielkosci 5 z powtorzeniam
+np.random.seed(42) #ustawienie ziarna losowosci dla powtarzalnosci wynikow
+from scipy.stats import uniform #importowanie rozkladu jednostajnego
+uniform.cdf(7,0,12) #obliczenie dystrybuanty dla rozkladu jednostajnego - prawdopodobienstwo ze wartosc bedzie mniejsza lub rowna 7 przy zakresie od 0 do 12
+1 - uniform.cdf(7,0,12) #obliczenie prawdopodobienstwa ze wartosc bedzie wieksza niz 7 przy zakresie od 0 do 12
+uniform.cdf(7,0,12) - uniform.cdf(4,0,12) #obliczenie prawdopodobienstwa ze wartosc bedzie miedzy 4 a 7 przy zakresie od 0 do 12
+uniform.rvs(0,5, size=10) #generowanie 10 losowych wartosci z rozkladu jednostajnego w zakresie od 0 do 5
+from scipy.stats import binom
+binom.rvs(1, 0.5, size = 10) #generowanie 10 losowych wartosci z rozkladu dwumianowego z 1 probka i prawdopodobienstwem sukcesu 0.5 np rzut 1 moneta 10 razy z prawdopodobienstwem wyrzucenia orla 0.5
+binom.pmf(3, 10, 0.5) #obliczenie prawdopodobienstwa uzyskania dokladnie 3 sukcesow w 10 probkach przy prawdopodobienstwie sukcesu 0.5  np rzut 10 monetami z prawdopodobienstwem wyrzucenia orla 0.5 i uzyskanie dokladnie 3 orlow
+binom.cdf(3, 10, 0.5) #obliczenie prawdopodobienstwa uzyskania maksymalnie 3 sukcesow w 10 probkach przy prawdopodobienstwie sukcesu 0.5
+1 - binom.cdf(3, 10, 0.5) #obliczenie prawdopodobienstwa uzyskania wiecej niz 3 sukcesow w 10 probkach przy prawdopodobienstwie sukcesu 0.5 
+from scipy.stats import norm #importowanie rozkladu normalnego
+norm.cdf(154, 161, 7) #obliczenie dystrybuanty dla rozkladu normalnego - prawdopodobienstwo ze wartosc bedzie mniejsza lub rowna 154 przy sredniej 161 i odchyleniu standardowym 7
+1 - norm.cdf(154, 161, 7) #obliczenie prawdopodobienstwa ze wartosc bedzie wieksza niz 154 przy sredniej 161 i odchyleniu standardowym 7
+norm.cdf(170, 161, 7) - norm.cdf(154, 161, 7) #obliczenie prawdopodobienstwa ze wartosc bedzie miedzy 154 a 170 przy sredniej 161 i odchyleniu standardowym
+norm.ppf(0.9, 161, 7) #obliczenie wartosci odpowiadajacej 90 percentylowi przy sredniej 161 i odchyleniu standardowym 7
+norm.ppf(1-0.9, 161, 7) #obliczenie wartosci odpowiadajacej 10 percentylowi przy sredniej 161 i odchyleniu standardowym 7
+norm.rvs(161, 7, size=10) #generowanie 10 losowych wartosci z rozkladu normalnego o sredniej 161 i odchyleniu standard
+sample_means = [] #utworzenie pustej listy na srednie z probek
+for i in range(1000): #petla wykonujaca sie 1000 razy
+    sample_means.append(np.mean(die.sample(10, replace=True))) #dodanie sredniej z losowej probki 10 rzutow kostka do listy sample_means
+from scipy.stats import poisson #importowanie rozkladu Poissona
+poisson.pmf(3, 2) #obliczenie prawdopodobienstwa uzyskania dokladnie 3 zdarzen przy sredniej liczbie zdarzen 2
+poisson.cdf(3, 2) #obliczenie prawdopodobienstwa uzyskania maksymalnie 3 zdarzen przy sredniej liczbie zdarzen
+1- poisson.cdf(3, 2) #obliczenie prawdopodobienstwa uzyskania wiecej niz 3 zdarzen przy sredniej liczbie zdarzen 2
+poisson.rvs(2, size=10) #generowanie 10 losowych wartosci z rozkladu Poissona o sredniej liczbie zdarzen 2
+from scipy.stats import expon #importowanie rozkladu wykladniczego
+expon.cdf(5, scale = 2) #obliczenie dystrybuanty dla rozkladu wykladniczego - prawdopodobienstwo ze wartosc bedzie mniejsza lub rowna 5 przy sredniej 2
+1 - expon.cdf(5, scale = 2) #obliczenie prawdopodobienstwa ze wartosc bedzie wieksza niz 5 przy sredniej 2
+expon.cdf(7, scale = 2) - expon.cdf(5, scale = 2) #obliczenie prawdopodobienstwa ze wartosc bedzie miedzy 5 a 7 przy sredniej 2
+sleep['sleep_total'].corr(sleep['sleep_rem']) #obliczenie wspolczynnika korelacji miedzy dwoma kolumnami 'sleep_total' i 'sleep_rem'
+sleep['log_bodywt'] = np.log(sleep['bodywt']) #dodanie nowej kolumny 'log_bodywt' z wartosciami logarytmicznymi z kolumny 'bodywt'
+results = stats.anderson(sleep['sleep_total']) #przeprowadzenie testu Andersona-Darlinga na kolumnie 'sleep_total' w celu sprawdzenia normalnosci rozkladu danych
+results.statistic #wyswietlenie statystyki testu Andersona-Darlinga
+results.critical_values #wyswietlenie wartosci krytycznych dla testu Andersona-Darlinga
+results.significance_level[results.statsistics > results.critical_values] #sprawdzenie na jakim poziomie istotnosci mozemy odrzucic hipoteze zerowa o normalnosci rozkladu danych, jezeli statystyka testu jest wieksza niz wartosc krytyczna to mamy do czynienia z rozkladem innym niz normalny 
+r, p_value = stats.pearsonr(sleep['sleep_total'], sleep['sleep_rem']) #obliczenie wspolczynnika korelacji Pearsona i wartosci p miedzy dwoma kolumnami 'sleep_total' i 'sleep_rem'
+np.log10(p_value) #obliczenie logarytmu dziesietnego z wartosci p
+s, p_value = stats.levene(sleep['sleep_total'], sleep['sleep_rem']) #przeprowadzenie testu Levene'a na kolumnach 'sleep_total' i 'sleep_rem' w celu sprawdzenia homogenicznosci wariancji
+s, p_value = stats.f_oneway(sleep['sleep_total'], sleep['sleep_rem']) #przeprowadzenie analizy wariancji (ANOVA) na kolumnach 'sleep_total' i 'sleep_rem' zeby sprawdzic czy istnieje istotna roznica miedzy srednimi tych dwoch grup
+s, p_value, m, table = stats.median_test(sleep['sleep_total'], sleep['sleep_rem']) #przeprowadzenie testu mediany na kolumnach 'sleep_total' i 'sleep_rem' w celu sprawdzenia czy istnieje istotna roznica miedzy medianami tych dwoch grup
+tau, p_value = stats.kendalltau(sleep['sleep_total'], sleep['sleep_rem']) #obliczenie wspolczynnika korelacji Kendalla i wartosci p miedzy dwoma kolumnami 'sleep_total' i 'sleep_rem'  w celu sprawdzenia monotonicznego zwiazku miedzy nimi
+chi2, p, d, e = stats.chi2_contingency(contingency_table) #przeprowadzenie testu chi-kwadrat na tabeli kontyngencji w celu sprawdzenia czy istnieje zwiazek miedzy dwiema zmiennymi kategorycznymi
+dof = min(6-1, 4-1) = 1 #obliczenie stopni swobody dla testu chi-kwadrat (liczba wierszy -1) * (liczba kolumn -1)
+n = 3394 #liczba obserwacji w tabeli kontyngencji
+v = np.sqrt((chi2 / n) / dof) #obliczenie wspolczynnika V Cramera dla testu chi-kwadrat
+# descriptive statistics - statystyki opisowe, podsumowuja i opisują cechy zbioru danych za pomocą miar takich jak srednia, mediana, dominanta, wariancja, odchylenie standardowe, kwartyle i percentyle
+# inferential statistics - statystyki inferencyjne, pozwalaja na wyciaganie wnioskow o populacji na podstawie probki danych, obejmuja testy hipotez, przedzialy ufnosci i analize regresji (r - silna korelacja liniowa, p-value < 0.05 - istotnosc statystyczna, hipoteza zerowa odrzucona)
+# srednia - suma wartosci podzielona przez liczbe wartosci
+# mediana - srodkowa wartosc w posortowanym zbiorze danych
+# dominanta (moda) - najczesciej wystepujaca wartosc w
+# wariancja - srednia z kwadratow odleglosci kazdej wartosci od sredniej
+# odchylenie standardowe - pierwiastek kwadratowy z wariancji
+# kwartyle - wartosci dzielace zbior danych na cztery rowne czesci
+# percentyle - wartosci dzielace zbior danych na 100 rownych czesci
+# rozstep miedzy kwartylowy (IQR) - roznica miedzy trzecim a pierwszym kwartylem (wysokosc boxa w boxplocie)
+# outliers - wartosci odstajace, znajdujace sie poza granicami wyznaczonymi przez IQR data < Q1 - 1.5 * IQR lub data > Q3 + 1.5 * IQR
+# chance = rozwiazanie / all possible outcomes np szansa na wyrzucenie 6 oczek przy rzucie kostka to 1/6
+# sampling - proces wybierania probki z wiekszego zbioru danych w celu analizy lub estymacji cech populacji
+# sampling with replacement - wybieranie probki z mozliwoscia powtorzen, tzn ta sama wartosc moze byc wybrana wielokrotnie
+# sampling without replacement - wybieranie probki bez mozliwosci powtorzen, tzn ta sama wartosc moze byc wybrana tylko raz
+# continous distribution - rozklad ciagly, gdzie zmienna losowa moze przyjmowac nieskonczenie wiele wartosci w danym zakresie np wzrost, waga
+# discrete distribution - rozklad dyskretny, gdzie zmienna losowa moze przyjmowac tylko okreslone, oddzielne wartosci np liczba dzieci w rodzinie, liczba samochodow
+# normal distribution - rozklad ciagly, gdzie wiekszosc wartosci skupia sie wokol sredniej, tworząc charakterystyczny dzwonowaty ksztalt, uzywamy sredniej i odchylenia standardowego do jego opisu np wzrost doroslych mezczyzn, wyniki testow IQ
+# standard normal distribution - standaryzowany rozklad normalny, gdzie srednia wynosi 0, a odchylenie standardowe 1, uzywany do porownywania wynikow z roznych rozkladow normalnych poprzez przeksztalcenie wartosci na wartosci z rozkladu standardowego np oceny testow standaryzowanych
+# uniform distribution - rozklad jednostajny, gdzie wszystkie wartosci w danym zakresie maja jednakowe prawdopodobienstwo wystapienia np rzut kostka, losowanie liczb w loterii
+# binomial distribution - rozklad dwumianowy, opisuje liczbe sukcesow w okreslonej liczbie probek, przy danym prawdopodobienstwie sukcesu np liczba rzutow orlem w 10 rzutach moneta przy prawdopodobienstwie sukcesu 0.5
+# sampling distribution - rozklad probkowy, opisuje rozklad statystyki (np sredniej) obliczonej z wielu probek z tej samej populacji, uzywany do estymacji cech populacji i testowania hipotez np rozklad srednich wzrostu z 1000 probek po 30 osob z populacji doroslych mezczyzn
+# poisson distribution - rozklad Poissona, opisuje liczbe zdarzen wystepujacych w okreslonym czasie lub przestrzeni, przy znanej sredniej liczbie zdarzen np liczba zwierzat adoptowanych w schronisku w ciagu dnia, liczba trzesien ziemi w ciagu roku w Kalifornii, opisany jest wartoscia zwana lambda (srednia liczba zdarzen na jednostke czasu/przestrzeni)
+# lambda - srednia liczba zdarzen na jednostke czasu/przestrzeni w rozkladzie Poissona np srednia liczba adopcji zwierzat w schronisku na dzien
+# exponential distribution - rozklad wykładniczy, opisuje czas miedzy zdarzeniami w procesie Poissona, tzn jak dlugo trzeba czekac na nastepne zdarzenie, charakteryzuje sie jedna parametrem zwanym lambda (srednia liczba zdarzen na jednostke czasu) np prawdopodobienstwo ze miedzy adopcjami zwierzecia uplywa wiecej niz 2 godziny
+# t-student distribution - rozklad t-Studenta, podobny do rozkladu normalnego, ale z grubszy ogonami, uzywany gdy probka jest mala (zazwyczaj mniej niz 30) lub gdy odchylenie standardowe populacji jest nieznane np ocena sredniej wzrostu w malej grupie ludzi, ma grube ogony, co oznacza wieksze prawdopodobienstwo wystapienia wartosci ekstremalnych w porownaniu z rozkladem normalnym
+# log-normal distribution - rozklad logarytmiczno-normalny, opisuje zmienne losowe, ktorych logarytm ma rozklad normalny, uzywany do modelowania zjawisk takich jak dochody, wartosci akcji czy rozmiary firm np dlugosc gry w szachy, cisnienie krwi u doroslych, ma dlugi ogon po prawej stronie
+# central limit theorem - centralne twierdzenie graniczne, stwierdza, ze suma lub srednia duzej liczby niezaleznych i identycznie rozlozonych zmiennych losowych z dowolnym rozkladem bedzie miala rozklad zblizony do normalnego, co pozwala na stosowanie metod statystyki inferencyjnej nawet gdy populacja nie jest normalnie rozlozona
+# correlation coefficient - wspolczynnik korelacji, mierzy sile i kierunek zwiazku miedzy dwiema zmiennymi, wartosci od -1 do 1, gdzie 1 oznacza idealna dodatnia korelacje, -1 idealna ujemna korelacje, a 0 brak korelacji np wysokosc i waga czesto sa pozytywnie skorelowane
+# pearson correlation - korelacja Pearsona, dane ciagle i maja zaleznosc liniowa, mierzy liniowy zwiazek miedzy dwiema zmiennymi ilosciowymi, zaklada normalnosc rozkladu i brak outlierow np wzrost i waga czesto sa pozytywnie skorelowane
+# spearman correlation - korelacja Spearmana, dane moga byc nieliniowe ale rosna w tym samym keirunku,  mierzy monotoniczny zwiazek miedzy dwiema zmiennymi, uzywana gdy dane nie sa normalnie rozlozone lub zawieraja outliery, opiera sie na rangach wartosci zamiast na samych wartosciach np pozycja w rankingu biegaczy a czas, zarobki rosnace zgodnie z wiekiem (rosna a potem maleja)
+# kendall correlation - korelacja Kendalla, dane rangowe, albo malo danych,mierzy zgodnosc rang miedzy dwiema zmiennymi, uzywana gdy dane zawieraja wiele zwiazanych wartosci lub sa ordinalne np preferencje konsumentow do produktow A i B, oceny filmow przez dwoch recenzentow
+# log transformation - transformacja logarytmiczna, przeksztalcenie danych poprzez zastosowanie funkcji logarytmicznej, uzywana do zmniejszenia asymetrii rozkladu i zredukowania wplywu outlierow np transformacja dochodow w celu uzyskania bardziej symetrycznego rozkladu
+# hipoteza zerowa (H0) - domyslne zalozenie, ze nie ma efektu lub zwiazku miedzy badanymi zmiennymi
+# parametric tests - testy parametryczne, zakladaja pewne zalozenia dotyczace rozkladu danych, takie jak normalnosc i homogenicznosc wariancji, np test t-Studenta, analiza wariancji (ANOVA)
+# non-parametric tests - testy nieparametryczne, nie zakladaja konkretnych zalozen dotyczacych rozkladu danych, sa bardziej elastyczne i moga byc stosowane do danych nieparametrycznych, np test Manna-Whitneya, test Kruskala-Wallisa
+# p-value - wartosc p, mierzy dowody przeciwko hipotezie zerowej, niska wartosc p (zazwyczaj < 0.05) wskazuje na silne dowody przeciwko H0, co prowadzi do jej odrzucenia
+# statistical significance - istotnosc statystyczna, wskazuje na prawdopodobienstwo, ze obserwowany efekt nie jest wynikiem przypadku, zazwyczaj ustalana przy
+# cohens d - miara wielkosci efektu, opisuje roznice miedzy dwiema srednimi w jednostkach odchylenia standardowego, interpretacja: 0.2 - maly efekt, 0.5 - sredni efekt, 0.8 - duzy efekt
+# r**2 - wspolczynnik determinacji, mierzy proporcje wariancji zmiennej zaleznej wyjasnionej przez zmienne niezalezne w modelu regresji, wartosci od 0 do 1, gdzie 1 oznacza idealne dopasowanie modelu
+
+sampling_ditribution =[] #rozklad probkowania - rozklad wartosci statystyki probkowej (np sredniej, wariancji) uzyskanej z wielu probek pobranych z tej samej populacji
+for in range(1000): #petla wykonujaca sie 1000 razy
+    random_sample = np.random.choice(salaries, size = 10)
+    sample_mean = np.mean(random_sample)
+    sampling_ditribution.append(sample_mean)
+
+plt.hist(sampling_ditribution, bins=30) #tworzenie histogramu rozkladu probkowania
+ci = stats.norm.interval(loc= 8000, scale = 500, alpha = 0.95) #obliczenie przedzialu ufnosci dla sredniej 8000 i odchylenia standardowego 500 przy poziomie ufnosci 95%
+
+#pobranie 1000 probek wielkosci 5 z populacji i obliczenie srednich z tych probek
+population = [1,2,3,4,5,6,7,8,9,10] #przykladowa populacja
+sample_means
+for i in range(1000): #petla wykonujaca sie 1000 razy
+    sample_5 = np.random.choice(population, size=5, replace=True) #losowanie probki z powtorzeniami
+    sample_means.append(sample_5.mean()) #dodanie sredniej z probki do listy sample_means
