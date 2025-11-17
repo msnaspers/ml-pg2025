@@ -4,7 +4,11 @@ import os
 import pandas as pd
 import seaborn as sns
 from sklearn.decomposition import PCA
-
+import optuna
+import xgboost as xgb
+from sklearn.metrics import (
+                            accuracy_score, 
+                            )
 
 def bmi_calculation(mass, height):
     bmi = mass / (height / 100) ** 2
@@ -98,3 +102,32 @@ def unique_values(df, num_of_unique_values):
             unique_values = sorted(df[col].unique())
             if len(unique_values) <= num_of_unique_values:
                 print(f"{col}: {df[col].dtype}, {unique_values}\n")
+
+
+def optuna_objective(X_train, X_test, y_train, y_test):
+    return lambda trial : objective(trial, X_train, X_test, y_train, y_test)
+
+
+def objective(trial, X_train, X_test, y_train, y_test):
+    params = {
+        "objective": 'binary:logistic',
+        "n_estimators": trial.suggest_int("n_estimators", 100, 1000),
+        "verbosity": 0,
+        "learning_rate": trial.suggest_float("learning_rate", 1e-3, 0.1, log=True),
+        "max_depth": trial.suggest_int("max_depth", 1, 10),
+        "subsample": trial.suggest_float("subsample", 0.05, 1.0),
+        "colsample_bytree": trial.suggest_float("colsample_bytree", 0.05, 1.0),
+        "min_child_weight": trial.suggest_int("min_child_weight", 1, 20),
+    }
+
+
+    model = xgb.XGBClassifier(**params)
+    model.fit(X_train, y_train)
+
+
+    y_pred = model.predict(X_test)
+    predictions = [round(value) for value in y_pred]
+
+    accuracy = accuracy_score(y_test, predictions)
+
+    return accuracy
