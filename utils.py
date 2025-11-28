@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import os
 import pandas as pd
 import seaborn as sns
+import shap
 from sklearn.decomposition import PCA
 import optuna
 import xgboost as xgb
@@ -98,7 +99,7 @@ def objective(trial, X_train, X_test, y_train, y_test):
 
 
 def one_hot_encode_columns(df, columns_list):
-    df = pd.get_dummies(df, columns=columns_list, prefix=columns_list, drop_first=True)
+    df = pd.get_dummies(df, columns=columns_list, prefix=columns_list, drop_first=True, dtype=int)
     return df
 
 
@@ -118,6 +119,12 @@ def rename_columns_snake_case(df):
     dataframe.columns = [col.lower().replace(" ", "_").replace("(", "_").replace(")", "") for col in dataframe.columns]
     return dataframe
 
+def shap_waterfall_specific_obbservation(i, shap_values, predictions):
+    print(f"Waterfall plot dla obserwacji o indeksie {i}:")
+    print('Nie jest palaczem!' if predictions.iloc[i]==0 else 'Jest palaczem!')
+    plt.figure()
+    shap.plots.waterfall(shap_values[i])
+    plt.show()  
 
 def unique_values(df, num_of_unique_values):
     for col in df.columns:
@@ -125,5 +132,4 @@ def unique_values(df, num_of_unique_values):
             unique_values = sorted(df[col].unique())
             if len(unique_values) <= num_of_unique_values:
                 print(f"{col}: {df[col].dtype}, {unique_values}\n")
-
 
